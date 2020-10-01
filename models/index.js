@@ -1,17 +1,7 @@
 const mongoose = require('mongoose');
+const { MONGO_URI } = require('../configs');
 
-const {
-  MONGO_HOST,
-  MONGO_PORT,
-  MONGO_DATABASE,
-  MONGO_USERNAME,
-  MONGO_PASSWORD,
-} = process.env;
-
-// const mongoUri = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`;
-const mongoUri = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`;
-
-mongoose.connect(mongoUri, {
+mongoose.connect(MONGO_URI, {
   autoIndex: false,
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -25,5 +15,5 @@ mongoose.connection.on('error', (err) => {
 });
 
 mongoose.connection.once('open', () => {
-  console.log(`Connected to MongoDB: ${mongoUri}`);
+  console.log(`Connected to MongoDB: ${MONGO_URI}`);
 });
