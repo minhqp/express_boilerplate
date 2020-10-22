@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 
 const camelCaseReq = require('./middlewares/camelCaseReq');
+const omitReq = require('./middlewares/omitReq');
 const snakeCaseRes = require('./middlewares/snakeCaseRes');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -24,8 +25,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(camelCaseReq);
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(omitReq);
 app.use(snakeCaseRes());
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 require('./routes')(app);
 

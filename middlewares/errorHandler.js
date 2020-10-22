@@ -4,12 +4,14 @@ const getErrorMessage = require('../errors/message');
 
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  let statusCode = err.code;
+  let statusCode = err.code || err.statusCode;
   let { message } = err;
-  const code = err.code || codes.INTERNAL_SERVER_ERROR;
+  let details;
+  const code = err.code || err.statusCode || codes.INTERNAL_SERVER_ERROR;
   switch (code) {
     case codes.BAD_REQUEST:
       message = message || 'Bad Request';
+      details = err.details;
       break;
     case codes.UNAUTHORIZED:
       message = 'Unauthorized';
@@ -33,16 +35,12 @@ const errorHandler = (err, req, res, next) => {
   }
   return res.status(statusCode).send(
     snakecaseKeys(
-      code
-        ? {
-            status: 0,
-            code,
-            message,
-          }
-        : {
-            status: 0,
-            message,
-          },
+      {
+        status: 0,
+        code,
+        message,
+        details,
+      },
       { deep: true },
     ),
   );
