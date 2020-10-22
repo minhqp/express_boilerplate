@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - express_boilerplate_db:/data/db
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+      - PORT=${PORT}
+
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_DATABASE=${MONGO_DATABASE}
+    depends_on:
+      - mongo
+
+volumes:
+  express_boilerplate_db:
