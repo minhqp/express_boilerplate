@@ -2,8 +2,8 @@
   "name": "vbee_operation_management_system_backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,6 @@
     "express": "^4.17.1",
     "express-mung": "^0.5.1",
     "express-validation": "^3.0.6",
-    "express-validator": "^6.6.0",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.25",
