@@ -94,3 +94,6 @@ typings/
 .dynamodb/
 .env
 .vscode/
+
+# Except
+!docker/.env
