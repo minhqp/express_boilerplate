@@ -3,7 +3,7 @@ const codes = require('../errors/code');
 const getErrorMessage = require('../errors/message');
 
 // eslint-disable-next-line no-unused-vars
-function errorHandler(err, req, res, next) {
+const errorHandler = (err, req, res, next) => {
   let statusCode = err.code;
   let { message } = err;
   const code = err.code || codes.INTERNAL_SERVER_ERROR;
@@ -43,8 +43,9 @@ function errorHandler(err, req, res, next) {
             status: 0,
             message,
           },
+      { deep: true },
     ),
   );
-}
+};
 
 module.exports = errorHandler;

@@ -3,12 +3,12 @@ const {
 } = require('mongoose');
 const User = require('../models/user');
 
-async function createUser({ email, name, password }) {
+const createUser = async ({ email, name, password }) => {
   const user = await User.create({ email, name, password });
   return user;
-}
+};
 
-async function findUser(condition) {
+const findUser = async (condition) => {
   if (ObjectId.isValid(condition)) {
     const user = await User.findById(condition);
     return user;
@@ -20,15 +20,15 @@ async function findUser(condition) {
   }
 
   return null;
-}
+};
 
-async function updateUser(userId, data) {
+const updateUser = async (userId, data) => {
   const user = await User.findByIdAndUpdate(userId, data, { new: true });
   return user;
-}
+};
 
-async function deleteUser(userId) {
+const deleteUser = async (userId) => {
   await User.findByIdAndDelete(userId);
-}
+};
 
 module.exports = { createUser, findUser, updateUser, deleteUser };

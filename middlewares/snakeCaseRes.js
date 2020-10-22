@@ -1,16 +1,16 @@
 const mung = require('express-mung');
 const snakecaseKeys = require('snakecase-keys');
 
-function sortObject(obj) {
+const sortObject = (obj) => {
   return Object.keys(obj)
     .sort()
     .reduce((result, key) => {
       result[key] = obj[key];
       return result;
     }, {});
-}
+};
 
-function transformObjectId(obj) {
+const transformObjectId = (obj) => {
   if (typeof obj !== 'object') {
     return obj;
   }
@@ -39,14 +39,14 @@ function transformObjectId(obj) {
   if (Object.prototype.toString.call(obj) === '[object Date]') return obj;
 
   return sortObject(obj);
-}
+};
 
-function snakecaseRes() {
-  return mung.json(function transform(body, req, res) {
+const snakecaseRes = () => {
+  return mung.json((body, req, res) => {
     return snakecaseKeys(transformObjectId(body), {
       deep: true,
     });
   });
-}
+};
 
 module.exports = snakecaseRes;

@@ -1,4 +1,4 @@
-function generateRandomString(length, allowedChars) {
+const generateRandomString = (length, allowedChars) => {
   let text = '';
   const possible =
     allowedChars ||
@@ -8,6 +8,6 @@ function generateRandomString(length, allowedChars) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
-}
+};
 
 module.exports = { generateRandomString };

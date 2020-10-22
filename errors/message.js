@@ -1,6 +1,6 @@
 const codes = require('./code');
 
-function getErrorMessage(code) {
+const getErrorMessage = (code) => {
   switch (code) {
     case codes.USER_NOT_FOUND:
       return 'User is not found';
@@ -9,6 +9,6 @@ function getErrorMessage(code) {
     default:
       return null;
   }
-}
+};
 
 module.exports = getErrorMessage;

@@ -3,7 +3,7 @@ const CustomError = require('../errors/CustomError');
 const codes = require('../errors/code');
 const authService = require('../services/auth');
 
-async function auth(req, res, next) {
+const auth = async (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) throw new CustomError(codes.UNAUTHORIZED);
 
@@ -18,7 +18,7 @@ async function auth(req, res, next) {
   }
 
   return next();
-}
+};
 
 module.exports = {
   auth: asyncMiddleware(auth),

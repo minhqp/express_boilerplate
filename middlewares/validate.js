@@ -6,7 +6,7 @@ const apiTypes = {
   LOGIN: 'LOGIN',
 };
 
-function validate(api) {
+const validate = (api) => {
   switch (api) {
     case apiTypes.LOGIN:
       return [
@@ -24,15 +24,15 @@ function validate(api) {
     default:
       return [];
   }
-}
+};
 
-function getValidateResult(req, res, next) {
+const getValidateResult = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     throw new CustomError(errorCodes.BAD_REQUEST, errors.array().shift().msg);
   }
   next();
-}
+};
 
 module.exports = {
   apiTypes,
