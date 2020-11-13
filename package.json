@@ -19,6 +19,7 @@
     "express-mung": "^0.5.1",
     "express-validation": "^3.0.6",
     "helmet": "^3.23.3",
+    "http-logger": "git+https://github.com/minhqp/http-logger.git",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
