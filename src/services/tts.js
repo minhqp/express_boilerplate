@@ -6,8 +6,8 @@ const tts = async (apiUrl, input, accessToken) => {
   let config;
 
   if (
-    apiUrl === 'http://localhost:8881/tts' ||
-    apiUrl === 'http://localhost:8882/tts'
+    apiUrl === 'http://43.239.223.20:9801/tts' ||
+    apiUrl === 'http://43.239.223.20:9802/tts'
   ) {
     config = {
       headers: {
@@ -15,8 +15,7 @@ const tts = async (apiUrl, input, accessToken) => {
         'access-token': accessToken,
       },
     };
-  }
-  if (apiUrl === 'http://34.64.213.91:8000/tts') {
+  } else if (apiUrl === 'http://34.64.213.91:8000/tts') {
     config = {
       headers: {
         'Content-Type': 'application/json',
@@ -34,6 +33,7 @@ const tts = async (apiUrl, input, accessToken) => {
   }
 
   const res = await axios.post(apiUrl, body, config);
+  console.log({ apiUrl, input });
 
   return res.data;
 };

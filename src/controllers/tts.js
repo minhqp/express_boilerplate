@@ -1,11 +1,10 @@
 const loginTeamService = require('../services/loginTeam');
-const data = require('../constants/data_test.json');
 const createAudioNyUrlService = require('../services/createAudioByUrl');
 const createAudioByBase64Service = require('../services/createAudioByBase64');
 const createAudioByWav = require('../services/createAudioByWav');
 
 const tts = async (req, res) => {
-  const { email, password, username, teamId, type } = req.body;
+  const { email, password, username, teamId, type, testType } = req.body;
   let accessToken;
   switch (teamId) {
     case 'team2':
@@ -16,7 +15,7 @@ const tts = async (req, res) => {
       break;
     case 'team3':
       accessToken = await loginTeamService.loginTeam(
-        'http://dfb687505e21.ngrok.io/login',
+        'http://43.239.223.20:9803/login',
         { email, password },
       );
       break;
@@ -40,13 +39,13 @@ const tts = async (req, res) => {
       break;
     case 'team8':
       accessToken = await loginTeamService.loginTeam(
-        'http://localhost:8881/login',
+        'http://43.239.223.20:9801/login',
         { username, password },
       );
       break;
     case 'team9':
       accessToken = await loginTeamService.loginTeam(
-        'http://localhost:8882/login',
+        'http://43.239.223.20:9802/login',
         { username, password },
       );
       break;
@@ -54,18 +53,28 @@ const tts = async (req, res) => {
       break;
   }
 
+  let data;
+  switch (testType) {
+    case 'mos': data = require('../constants/mos_test.json'); break;
+    case 'transcript': data = require('../constants/transcript_test.json');
+    default: break;
+  }
+
+  console.log(data.length);
+
   if (type === 'url') {
-    await createAudioNyUrlService.createAudioByUrl(data, teamId, accessToken);
+    await createAudioNyUrlService.createAudioByUrl(data, teamId, accessToken, testType);
   }
   if (type === 'base64') {
     await createAudioByBase64Service.createAudioByBase64(
       data,
       teamId,
       accessToken,
+      testType,
     );
   }
   if (type === 'wav') {
-    await createAudioByWav.createAudioByWav(data, teamId, accessToken);
+    await createAudioByWav.createAudioByWav(data, teamId, accessToken, testType);
   }
 
   return res.send({ status: 1, result: { accessToken } });

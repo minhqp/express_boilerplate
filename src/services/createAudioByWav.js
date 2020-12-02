@@ -2,18 +2,18 @@ const fs = require('fs');
 const { toBuffer } = require('../utils/toBuffer');
 const ttsService = require('./tts');
 
-const createAudioByWav = async (data, teamId, accessToken) => {
+const createAudioByWav = async (data, teamId, accessToken, testType) => {
   const batchSize = 10;
 
   let i = 0;
-  while (i <= 0) {
+  while (i <= data.length) {
     await Promise.all(
       data.slice(i, i + batchSize).map(async (dt) => {
         let dataResponse;
         switch (teamId) {
           case 'team3':
             dataResponse = await ttsService.tts(
-              'http://dfb687505e21.ngrok.io/tts',
+              'http://43.239.223.20:9803/tts',
               {
                 inputText: dt.rawOriginContent,
                 outputType: 'wav',
@@ -37,8 +37,8 @@ const createAudioByWav = async (data, teamId, accessToken) => {
           default:
             break;
         }
-        if (!fs.existsSync(`public/audios/${teamId}`)) {
-          fs.mkdirSync(`public/audios/${teamId}`, { recursive: true });
+        if (!fs.existsSync(`public/audios/${testType}_${teamId}`)) {
+          fs.mkdirSync(`public/audios/${testType}_${teamId}`, { recursive: true });
         }
 
         console.log({ dataResponse });
@@ -46,13 +46,15 @@ const createAudioByWav = async (data, teamId, accessToken) => {
         const wavBuffer = toBuffer(dataResponse);
 
         fs.writeFileSync(
-          `public/audios/${teamId}/${dt.id}-${teamId}.wav`,
+          `public/audios/${testType}_${teamId}/${dt.id}-${teamId}.wav`,
           wavBuffer,
         );
       }),
     );
     i += batchSize;
   }
+
+  console.log('Synthesis DONE');
 };
 
 module.exports = { createAudioByWav };

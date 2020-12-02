@@ -1,7 +1,7 @@
 const fs = require('fs');
 const ttsService = require('./tts');
 
-const createAudioByBase64 = async (data, teamId, accessToken) => {
+const createAudioByBase64 = async (data, teamId, accessToken, testType) => {
   const batchSize = 10;
 
   let i = 0;
@@ -29,7 +29,7 @@ const createAudioByBase64 = async (data, teamId, accessToken) => {
             break;
           case 'team8':
             dataResponse = await ttsService.tts(
-              'http://localhost:8881/tts',
+              'http://43.239.223.20:9801/tts',
               { inputText: dt.rawOriginContent },
               accessToken,
             );
@@ -37,7 +37,7 @@ const createAudioByBase64 = async (data, teamId, accessToken) => {
             break;
           case 'team9':
             dataResponse = await ttsService.tts(
-              'http://localhost:8882/tts',
+              'http://43.239.223.20:9802/tts',
               { inputText: dt.rawOriginContent },
               accessToken,
             );
@@ -47,12 +47,12 @@ const createAudioByBase64 = async (data, teamId, accessToken) => {
             break;
         }
 
-        if (!fs.existsSync(`public/audios/${teamId}`)) {
-          fs.mkdirSync(`public/audios/${teamId}`, { recursive: true });
+        if (!fs.existsSync(`public/audios/${testType}_${teamId}`)) {
+          fs.mkdirSync(`public/audios/${testType}_${teamId}`, { recursive: true });
         }
 
         fs.writeFileSync(
-          `public/audios/${teamId}/${dt.id}-${teamId}.wav`,
+          `public/audios/${testType}_${teamId}/${dt.id}-${teamId}.wav`,
           Buffer.from(
             base64data.replace('data:audio/wav;base64', ''),
             'base64',
@@ -62,6 +62,8 @@ const createAudioByBase64 = async (data, teamId, accessToken) => {
     );
     i += batchSize;
   }
+
+  console.log('Synthesis DONE');
 };
 
 module.exports = { createAudioByBase64 };

@@ -5,17 +5,19 @@ const loginTeam = async (url, loginInfo) => {
   const { username, email, password } = loginInfo;
   let body;
   if (
-    url === 'http://localhost:8881/login' ||
-    url === 'http://localhost:8882/login'
+    url === 'http://43.239.223.20:9801/login' ||
+    url === 'http://43.239.223.20:9802/login'
   ) {
     body = { username, password };
   } else {
     body = { email, password };
   }
 
+  console.log(body);
+
   let config;
 
-  if (url === 'http://localhost:8882/login') {
+  if (url === 'http://43.239.223.20:9802/login') {
     config = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

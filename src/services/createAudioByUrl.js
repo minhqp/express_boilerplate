@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios').default;
 const ttsService = require('./tts');
 
-const createAudioByUrl = async (data, teamId, accessToken) => {
+const createAudioByUrl = async (data, teamId, accessToken, testType) => {
   const batchSize = 10;
 
   let i = 0;
@@ -24,12 +24,12 @@ const createAudioByUrl = async (data, teamId, accessToken) => {
           default:
             break;
         }
-        if (!fs.existsSync(`public/audios/${teamId}`)) {
-          fs.mkdirSync(`public/audios/${teamId}`, { recursive: true });
+        if (!fs.existsSync(`public/audios/${testType}_${teamId}`)) {
+          fs.mkdirSync(`public/audios/${testType}_${teamId}`, { recursive: true });
         }
 
         const writer = fs.createWriteStream(
-          `public/audios/${teamId}/${dt.id}-${teamId}.wav`,
+          `public/audios/${testType}_${teamId}/${dt.id}-${teamId}.wav`,
         );
 
         const response = await axios({
@@ -43,6 +43,8 @@ const createAudioByUrl = async (data, teamId, accessToken) => {
     );
     i += batchSize;
   }
+
+  console.log('Synthesis DONE');
 };
 
 module.exports = { createAudioByUrl };
