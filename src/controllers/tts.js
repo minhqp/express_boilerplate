@@ -19,6 +19,12 @@ const tts = async (req, res) => {
         { email, password },
       );
       break;
+    case 'team4':
+      accessToken = await loginTeamService.loginTeam(
+        'https://datngo.pagekite.me/login',
+        { email, password },
+      );
+      break;
     case 'team5':
       accessToken = await loginTeamService.loginTeam(
         'https://innovation-vn.ai/login',

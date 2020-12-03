@@ -32,6 +32,12 @@ const tts = async (apiUrl, input, accessToken) => {
     };
   }
 
+  console.log({
+    apiUrl,
+    body,
+    config,
+  })
+
   const res = await axios.post(apiUrl, body, config);
   console.log({ apiUrl, input });
 

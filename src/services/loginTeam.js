@@ -13,8 +13,6 @@ const loginTeam = async (url, loginInfo) => {
     body = { email, password };
   }
 
-  console.log(body);
-
   let config;
 
   if (url === 'http://43.239.223.20:9802/login') {
@@ -31,6 +29,8 @@ const loginTeam = async (url, loginInfo) => {
       },
     };
   }
+
+  console.log({ body, config });
 
   const res = await Axios.post(url, body, config);
 

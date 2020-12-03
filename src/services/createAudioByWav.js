@@ -22,6 +22,16 @@ const createAudioByWav = async (data, teamId, accessToken, testType) => {
             );
             break;
 
+          case 'team4':
+            dataResponse = await ttsService.tts(
+              'https://datngo.pagekite.me/tts',
+              {
+                inputText: dt.rawOriginContent,
+              },
+              accessToken,
+            );
+            break;
+
           case 'team7':
             dataResponse = await ttsService.tts(
               'http://34.64.213.91:8000/tts',
