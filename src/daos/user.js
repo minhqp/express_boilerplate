@@ -1,6 +1,4 @@
-const {
-  Types: { ObjectId },
-} = require('mongoose');
+const { ObjectId } = require('mongoose').Types;
 const User = require('../models/user');
 
 const createUser = async ({ email, name, password }) => {
